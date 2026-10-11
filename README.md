@@ -49,7 +49,7 @@ Para parar o banco: `docker compose down`. Os dados ficam no volume `pgdata`.
 | Variável | Exemplo | Uso |
 |---|---|---|
 | `PORT` | `3333` | Porta da API |
-| `WEB_ORIGIN` | `http://localhost:5173` | Única origem liberada no CORS |
+| `WEB_ORIGIN` | `http://localhost:5173,https://dayvdallyson.github.io` | Origens liberadas no CORS, separadas por vírgula |
 | `POSTGRES_USER` | `showtime` | Usuário do container |
 | `POSTGRES_PASSWORD` | `showtime` | Senha do container |
 | `POSTGRES_DB` | `showtime` | Banco do container |

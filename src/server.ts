@@ -5,12 +5,15 @@ import { Prisma } from "./generated/prisma/client.ts"
 import { moviesRouter } from "./movies.ts"
 
 const PORT = Number(process.env.PORT ?? 3333)
-const WEB_ORIGIN = process.env.WEB_ORIGIN ?? "http://localhost:5173"
+const WEB_ORIGINS = (process.env.WEB_ORIGIN ?? "http://localhost:5173")
+  .split(",")
+  .map((origin) => origin.trim())
+  .filter(Boolean)
 
 const app = express()
 
 app.disable("x-powered-by")
-app.use(cors({ origin: WEB_ORIGIN }))
+app.use(cors({ origin: WEB_ORIGINS }))
 app.use(express.json({ limit: "100kb" }))
 
 app.get("/health", (_req, res) => {
