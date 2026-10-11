@@ -1,0 +1,23 @@
+generator client {
+  provider            = "prisma-client"
+  output              = "../src/generated/prisma"
+  importFileExtension = "ts"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Movie {
+  id        String   @id @default(uuid(7)) @db.Uuid
+  title     String   @db.VarChar(200)
+  genre     String   @db.VarChar(50)
+  year      Int
+  synopsis  String?
+  posterUrl String?  @map("poster_url")
+  accent    String?  @db.Char(7)
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("movies")
+}

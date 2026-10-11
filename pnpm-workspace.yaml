@@ -1,0 +1,5 @@
+allowBuilds:
+  prisma: true
+  "@prisma/engines": true
+minimumReleaseAgeExclude:
+  - zod@4.6.6
