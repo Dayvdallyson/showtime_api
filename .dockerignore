@@ -1,7 +1,9 @@
 node_modules
 src/generated
+test
 .env
 .git
 .github
 Dockerfile
 docker-compose.yml
+vitest.config.ts

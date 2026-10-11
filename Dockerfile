@@ -18,4 +18,5 @@ ENV PORT=3333
 EXPOSE 3333
 
 USER node
-CMD ["sh", "-c", "node_modules/.bin/prisma migrate deploy && node src/server.ts"]
+# exec: o Node vira o PID 1 e recebe o SIGTERM para o desligamento gracioso
+CMD ["sh", "-c", "node_modules/.bin/prisma migrate deploy && exec node src/main.ts"]

@@ -1,0 +1,29 @@
+{
+  "$schema": "./node_modules/oxlint/configuration_schema.json",
+  "plugins": ["typescript", "unicorn", "import", "oxc", "node", "vitest"],
+  "categories": {
+    "correctness": "error",
+    "suspicious": "error",
+    "perf": "warn"
+  },
+  "options": {
+    "typeAware": true
+  },
+  "rules": {
+    "typescript/no-floating-promises": "error",
+    "typescript/no-misused-promises": "error",
+    "typescript/consistent-type-imports": "error",
+    "typescript/no-explicit-any": "error",
+    "import/no-cycle": "error",
+    "eqeqeq": "error",
+    "no-console": "error",
+    "oxc/no-async-endpoint-handlers": "off",
+    "import/no-unassigned-import": [
+      "error",
+      {
+        "allow": ["dotenv/config"]
+      }
+    ]
+  },
+  "ignorePatterns": ["node_modules", "src/generated"]
+}

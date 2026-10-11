@@ -12,7 +12,7 @@ concurrency:
 
 jobs:
   ci:
-    name: Typecheck e smoke test
+    name: Qualidade e testes
     runs-on: ubuntu-latest
 
     services:
@@ -32,6 +32,7 @@ jobs:
 
     env:
       DATABASE_URL: postgresql://showtime:showtime@localhost:5432/showtime?schema=public
+      TEST_DATABASE_URL: postgresql://showtime:showtime@localhost:5432/showtime_test?schema=public
       PORT: 3333
       WEB_ORIGIN: http://localhost:5173
 
@@ -51,6 +52,15 @@ jobs:
       - name: Typecheck
         run: pnpm typecheck
 
+      - name: Lint
+        run: pnpm lint
+
+      - name: Formatação
+        run: pnpm format:check
+
+      - name: Testes (unitários e integração)
+        run: pnpm test
+
       - name: Aplicar migrations
         run: pnpm prisma migrate deploy
 
@@ -64,17 +74,8 @@ jobs:
             curl -sf http://localhost:3333/health && break
             sleep 1
           done
-          curl -sf http://localhost:3333/health | grep -q '"ok":true'
-          test "$(curl -sf http://localhost:3333/movies | grep -o '"id"' | wc -l)" -eq 8
-          id=$(curl -sf -X POST http://localhost:3333/movies \
-            -H "Content-Type: application/json" \
-            -d '{"title":"CI","genre":"Teste","year":2026}' | sed -E 's/.*"id":"([^"]+)".*/\1/')
-          curl -sf -X PATCH "http://localhost:3333/movies/$id" \
-            -H "Content-Type: application/json" -d '{"year":2025}' | grep -q '"year":2025'
-          test "$(curl -s -o /dev/null -w '%{http_code}' -X DELETE "http://localhost:3333/movies/$id")" = 204
-          test "$(curl -s -o /dev/null -w '%{http_code}' "http://localhost:3333/movies/$id")" = 404
-          test "$(curl -s -o /dev/null -w '%{http_code}' -X POST http://localhost:3333/movies \
-            -H "Content-Type: application/json" -d '{}')" = 400
+          curl -sf http://localhost:3333/health | grep -q '"status":"ok"'
+          curl -sf http://localhost:3333/movies | grep -q '"total":8'
 
   docker:
     name: Publicar imagem no GHCR

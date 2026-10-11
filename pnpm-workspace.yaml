@@ -1,5 +1,6 @@
 allowBuilds:
   prisma: true
   "@prisma/engines": true
+  "@scarf/scarf": false
 minimumReleaseAgeExclude:
   - zod@4.6.6

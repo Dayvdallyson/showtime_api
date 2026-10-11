@@ -1,9 +1,15 @@
-import { prisma } from "../src/prisma.ts"
+import { loadEnv } from "../src/config/env.ts"
+import { createPrismaClient } from "../src/shared/database/prisma.ts"
+import { createLogger } from "../src/shared/logger.ts"
+
+const env = loadEnv()
+const logger = createLogger(env)
+const prisma = createPrismaClient(env.DATABASE_URL)
 
 const total = await prisma.movie.count()
 
 if (total > 0) {
-  console.log(`Banco já tem ${total} filmes, nada a fazer.`)
+  logger.info(`Banco já tem ${total} filmes, nada a fazer.`)
 } else {
   const { count } = await prisma.movie.createMany({
     data: [
@@ -17,7 +23,7 @@ if (total > 0) {
       { title: "Inverno", genre: "Romance", year: 2024, accent: "#14b8a6" },
     ],
   })
-  console.log(`${count} filmes inseridos.`)
+  logger.info(`${count} filmes inseridos.`)
 }
 
 await prisma.$disconnect()
