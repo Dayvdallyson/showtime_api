@@ -30,7 +30,6 @@ export function createOpenApiDocument() {
   })
 }
 
-// Documento gerado uma vez: os schemas não mudam com a API rodando
 export function createDocsRouter(): Router {
   const document = createOpenApiDocument()
   const router = Router()

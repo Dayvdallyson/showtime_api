@@ -10,7 +10,6 @@ const STATUS_BY_CATEGORY: Record<ErrorCategory, number> = {
 
 const PAYLOAD_TOO_LARGE = 413
 
-// Erros que o próprio Express gera ao ler o corpo (JSON malformado, corpo grande demais)
 type HttpClientError = { status: number; expose: true }
 
 export const errorHandler: ErrorRequestHandler = (error, req, res, _next) => {

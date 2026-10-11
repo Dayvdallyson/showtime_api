@@ -13,7 +13,6 @@ function createMovie(data: Partial<typeof validMovie> = {}) {
   return prisma.movie.create({ data: { ...validMovie, ...data } })
 }
 
-// createdAt explícito para a ordem da listagem não depender do relógio
 function createMoviesInOrder(titles: string[]) {
   const start = Date.now()
 
@@ -52,7 +51,6 @@ describe("GET /movies", () => {
   it("desempata pelo id filmes criados no mesmo instante", async () => {
     const { genre, year } = validMovie
     const createdAt = new Date()
-    // Inseridos com ids em ordem decrescente: sem o desempate, sairiam na ordem de inserção
     const ids = ["03", "02", "01"].map((suffix) => `0199d1f2-0000-7000-8000-0000000000${suffix}`)
     await prisma.movie.createMany({
       data: ids.map((id) => ({ id, title: id, genre, year, createdAt })),

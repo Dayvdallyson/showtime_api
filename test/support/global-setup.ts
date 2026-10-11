@@ -1,6 +1,5 @@
 import { execFileSync } from "node:child_process"
 
-// Cria a database de teste (se faltar) e aplica as migrations antes da suíte
 export default function setup() {
   const databaseUrl = process.env.TEST_DATABASE_URL
 

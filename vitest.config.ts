@@ -22,12 +22,10 @@ export default defineConfig({
           include: ["test/integration/**/*.test.ts"],
           environment: "node",
           globalSetup: ["test/support/global-setup.ts"],
-          // Os arquivos compartilham o mesmo banco, então rodam um de cada vez
           fileParallelism: false,
           env: {
             NODE_ENV: "test",
             LOG_LEVEL: "silent",
-            // Alto o bastante para a suíte não esbarrar no limite; o 429 tem teste próprio
             RATE_LIMIT_MAX: "10000",
             ...(testDatabaseUrl && { DATABASE_URL: testDatabaseUrl }),
           },

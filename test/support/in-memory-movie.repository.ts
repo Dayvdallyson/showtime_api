@@ -9,7 +9,6 @@ import type {
   NewMovie,
 } from "../../src/modules/movies/movie.repository.ts"
 
-// Implementação da porta só para testes: mesmo contrato, sem banco
 export class InMemoryMovieRepository implements MovieRepository {
   readonly movies: Movie[] = []
 

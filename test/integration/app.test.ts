@@ -4,7 +4,7 @@ import { describe, expect, it } from "vitest"
 import { setupTestApp } from "../support/test-app.ts"
 
 const ALLOWED_ORIGIN = "http://localhost:5173"
-const RATE_LIMIT_MAX = 2
+const RATE_LIMIT_MAX = 1
 
 describe("GET /health", () => {
   it("responde 200 quando o banco está de pé", async () => {
@@ -57,10 +57,7 @@ describe("rate limit", () => {
   const { app } = setupTestApp({ config: { RATE_LIMIT_MAX } })
 
   it("responde 429 depois do limite", async () => {
-    for (let attempt = 0; attempt < RATE_LIMIT_MAX; attempt++) {
-      // oxlint-disable-next-line no-await-in-loop -- as requisições precisam ser sequenciais
-      await request(app).get("/movies")
-    }
+    await request(app).get("/movies")
 
     const response = await request(app).get("/movies")
 

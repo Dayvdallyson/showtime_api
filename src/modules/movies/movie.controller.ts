@@ -9,13 +9,11 @@ import type {
 } from "./movie.schemas.ts"
 import type { MovieService } from "./movie.service.ts"
 
-// Os tipos de Request batem com os schemas aplicados pelo validate() em movie.routes.ts
 type ListRequest = Request<unknown, unknown, unknown, ListMoviesQuery>
 type IdRequest = Request<MovieIdParams>
 type CreateRequest = Request<unknown, unknown, CreateMovieInput>
 type UpdateRequest = Request<MovieIdParams, unknown, UpdateMovieInput>
 
-// Só HTTP: lê a entrada já validada, chama o service e escolhe o status
 export class MovieController {
   private readonly service: MovieService
 

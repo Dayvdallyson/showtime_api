@@ -29,7 +29,6 @@ const server = app.listen(env.PORT, (error) => {
 async function shutdown(signal: NodeJS.Signals) {
   logger.info({ signal }, "Encerrando a API")
 
-  // Se algo travar, não deixa o processo pendurado para sempre
   setTimeout(() => {
     logger.error("Desligamento demorou demais, forçando a saída")
     process.exit(1)

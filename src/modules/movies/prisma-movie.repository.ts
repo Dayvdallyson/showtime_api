@@ -11,8 +11,6 @@ import type {
 
 const RECORD_NOT_FOUND = "P2025"
 
-// O id (UUIDv7, ordenado pelo tempo) desempata filmes criados no mesmo instante,
-// senão a paginação pode repetir ou pular itens
 const LIST_ORDER = [{ createdAt: "asc" }, { id: "asc" }] as const
 
 export class PrismaMovieRepository implements MovieRepository {

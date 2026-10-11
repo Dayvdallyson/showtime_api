@@ -14,7 +14,6 @@ type TestAppOverrides = {
   checkDatabase?: AppDependencies["checkDatabase"]
 }
 
-// Sobe a app contra o banco de teste e limpa a tabela antes de cada teste
 export function setupTestApp(overrides: TestAppOverrides = {}) {
   const env = loadEnv()
   const prisma = createPrismaClient(env.DATABASE_URL)

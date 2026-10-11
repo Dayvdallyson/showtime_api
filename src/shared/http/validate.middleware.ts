@@ -12,9 +12,6 @@ export type ValidationSchemas = Partial<Record<RequestPart, z.ZodType>>
 
 type Parsed<Schema, Fallback> = Schema extends z.ZodType ? z.output<Schema> : Fallback
 
-// O handler devolvido carrega os tipos de saída dos schemas, assim a rota aceita um controller
-// tipado com eles (ex.: query com números) sem cast. Não impede um schema mais permissivo
-// que o tipo do controller; isso fica com os testes de integração.
 type ValidatedHandler<S extends ValidationSchemas> = RequestHandler<
   Parsed<S["params"], Request["params"]>,
   unknown,
@@ -22,8 +19,6 @@ type ValidatedHandler<S extends ValidationSchemas> = RequestHandler<
   Parsed<S["query"], Request["query"]>
 >
 
-// Troca cada parte da requisição pelo valor já validado (com defaults e coerções aplicados).
-// No Express 5 req.query é um getter, por isso a troca é feita com defineProperty.
 export function validate<S extends ValidationSchemas>(schemas: S): ValidatedHandler<S> {
   return (req, _res, next) => {
     for (const part of REQUEST_PARTS) {
@@ -45,7 +40,6 @@ export function validate<S extends ValidationSchemas>(schemas: S): ValidatedHand
   }
 }
 
-// Id em formato inválido não pode existir, então a resposta é a mesma de um id ausente
 function toRequestError(part: RequestPart, error: z.ZodError) {
   if (part === "params") return new NotFoundError()
 

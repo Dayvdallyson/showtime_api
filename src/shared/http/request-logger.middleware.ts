@@ -7,7 +7,6 @@ import type { Logger } from "../logger.ts"
 const REQUEST_ID_HEADER = "x-request-id"
 const REQUEST_ID_MAX_LENGTH = 128
 
-// Reaproveita o id que chegou (ex.: de um proxy) para seguir a requisição de ponta a ponta
 export function createRequestLogger(logger: Logger) {
   return pinoHttp({
     logger,

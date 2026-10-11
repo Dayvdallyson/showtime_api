@@ -32,7 +32,6 @@ export type MovieListResult = {
   total: number
 }
 
-// Porta: o service só conhece este contrato, nunca o Prisma
 export interface MovieRepository {
   list(filter: MovieListFilter): Promise<MovieListResult>
   findById(id: string): Promise<Movie | null>

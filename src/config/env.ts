@@ -18,13 +18,11 @@ const envSchema = z.object({
   LOG_LEVEL: z.enum(["fatal", "error", "warn", "info", "debug", "trace", "silent"]).default("info"),
   RATE_LIMIT_WINDOW_MS: z.coerce.number().int().positive().default(FIFTEEN_MINUTES_MS),
   RATE_LIMIT_MAX: z.coerce.number().int().positive().default(DEFAULT_RATE_LIMIT_MAX),
-  // Quantos proxies confiáveis ficam na frente da API (0 = acesso direto)
   TRUST_PROXY: z.coerce.number().int().min(0).default(0),
 })
 
 export type Env = z.infer<typeof envSchema>
 
-// Falha na inicialização: melhor não subir do que subir com configuração errada
 export function loadEnv(source: NodeJS.ProcessEnv = process.env): Env {
   const result = envSchema.safeParse(source)
 

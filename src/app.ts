@@ -38,7 +38,6 @@ export function createApp({ config, logger, checkDatabase, movieController }: Ap
   app.use(helmet())
   app.use(cors({ origin: config.WEB_ORIGIN }))
 
-  // Antes do rate limit: monitoramento consulta o health check o tempo todo
   app.get("/health", createHealthHandler(checkDatabase))
 
   app.use(
